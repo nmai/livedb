@@ -8,7 +8,7 @@
 assert = require 'assert'
 
 # For the simple OT type.
-{simple, text} = require 'ottypes'
+{simple, text, json0} = require 'ottypes'
 
 ot = require '../lib/ot'
 
@@ -197,4 +197,42 @@ describe 'ot', ->
       assert.deepEqual op1, {op:{position:15, text:'hi'}}
 
     # And op by op is tested in the first couple of tests.
+
+  describe 'filterSnapshot', ->
+    paths = ["name", "count", "tags", "contact"]
+    doc = {
+      name: "xxx"
+      data: {
+        name: "ian"
+        count: 2
+        tags: ["1337", "hacker"]
+        contact: {
+          email: "ian@lever.co"
+          phone: "867-5309"
+        }
+      }
+      v: 1
+      type: json0.uri
+    }
+    it 'filters properly', ->
+      ot.filterSnapshot(doc, ["name", "count"], json0)
+      assert.deepEqual doc, {
+        name: "xxx"
+        data: {
+          name: "ian"
+          count: 2
+        }
+        v: 1
+        type: json0.uri
+      }
+
+
+  describe 'filterOp', ->
+    # string, number, array, object
+    paths = ["name", "count", "tags", "contact"]
+    it 'filters create'
+    it 'filters del'
+    it 'filters na'
+    it 'filters si'
+    it 'filters sd'
 

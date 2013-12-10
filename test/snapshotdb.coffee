@@ -20,7 +20,7 @@ module.exports = (create, noBulkGetSnapshot) ->
     afterEach ->
       @db.close()
 
-    
+
     it 'returns null when you getSnapshot on a nonexistant doc name', (done) ->
       @db.getSnapshot @cName, @docName, (err, data) ->
         throw Error(err) if err
